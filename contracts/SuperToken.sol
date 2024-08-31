@@ -2,7 +2,7 @@
 pragma solidity ^0.8.26;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract MindToken is ERC20("SuperToken", "SPT") {
+contract SuperToken is ERC20("SuperToken", "SPT") {
     address public immutable OWNER;
     constructor() {
         OWNER = msg.sender;

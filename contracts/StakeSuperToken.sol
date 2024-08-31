@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /// @notice a users can have multiple stakes, each stake is independent of the other and can be liquidated independently;
 /// @dev for a developer the contract is quite straignt farward;
 
-contract StakeMindToken {
+contract StakeSuperToken {
     // This is a state variable to hold the MindToken Address
     // so we cam interact with it from the ERC20 Interface
 
@@ -49,7 +49,7 @@ contract StakeMindToken {
     // this is a sanity check modifier that ensures that zero address is not being used to interact with our contract
     // we could have done the check in every of the contract, but it cost lesser gas this way, and a cleaner code
 
-    modifier sanityCheck() {
+    modifier Check() {
         require(msg.sender != address(0), "Address zero Detected");
         _;
     }
@@ -66,7 +66,7 @@ contract StakeMindToken {
     /// @param _amount The amount of tokens to stake
     /// @param _duration The duration for which the user wants to stake their tokens in days (30, 60, 90)
 
-    function stake(uint256 _amount, uint256 _duration) external sanityCheck {
+    function stake(uint256 _amount, uint256 _duration) external Check {
         require(
             _duration == 30 || _duration == 60 || _duration == 90,
             "Invalid staking duration"
@@ -147,7 +147,7 @@ contract StakeMindToken {
     // users will reeive all the (MND) tokens that they have staked
     // including a profit for how long the stake have been
 
-    function liquidate(uint256 _stakeId) external sanityCheck {
+    function liquidate(uint256 _stakeId) external Check {
         // we are expecting the _stakeId argument passed to be an integer
         // and it it going to be the index of the stake - 1
         // because when asigning the Id we did userStakes.length + 1
@@ -216,7 +216,7 @@ contract StakeMindToken {
     function getTotalStakeBalance()
         external
         view
-        sanityCheck
+        Check
         returns (uint256)
     {
         return balances[msg.sender];
@@ -229,7 +229,7 @@ contract StakeMindToken {
     function getStakesForUser()
         external
         view
-        sanityCheck
+        Check
         returns (Stake[] memory)
     {
         return stakes[msg.sender];
@@ -241,7 +241,7 @@ contract StakeMindToken {
 
     function getDetailsOfASingleStake(
         uint256 _stakeId
-    ) external view sanityCheck returns (Stake memory) {
+    ) external view Check returns (Stake memory) {
         uint256 index = _stakeId - 1;
 
         Stake[] memory userStakes = stakes[msg.sender];

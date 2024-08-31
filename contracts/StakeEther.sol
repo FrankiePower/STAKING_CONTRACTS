@@ -36,7 +36,7 @@ contract StakeEther {
 
     // This modifier checks that the caller is not the zero address
 
-    modifier sanityCheck() {
+    modifier Check() {
         require(msg.sender != address(0), "Address zero detected");
         _;
     }
@@ -52,7 +52,7 @@ contract StakeEther {
     /// @notice This function allows a user to stake Ether for a specific duration
     /// @param _duration The duration for which the user wants to stake their Ether in days (30, 60, 90)
 
-    function stake(uint256 _duration) external payable sanityCheck {
+    function stake(uint256 _duration) external payable Check {
         require(
             _duration == 30 || _duration == 60 || _duration == 90,
             "Invalid staking duration"
@@ -88,7 +88,7 @@ contract StakeEther {
     // This function allows a user to liquidate (withdraw) their stakes
     // Users will receive all the Ether they have staked, including a profit for how long the stake has been
 
-    function liquidate(uint256 _stakeId) external sanityCheck {
+    function liquidate(uint256 _stakeId) external Check {
         uint256 index = _stakeId - 1;
 
         // Get the user's stakes from storage and ensure the index is valid
@@ -133,7 +133,7 @@ contract StakeEther {
     function getTotalStakeBalance()
         external
         view
-        sanityCheck
+        Check
         returns (uint256)
     {
         return balances[msg.sender];
@@ -146,7 +146,7 @@ contract StakeEther {
     function getStakesForUser()
         external
         view
-        sanityCheck
+        Check
         returns (Stake[] memory)
     {
         return stakes[msg.sender];
@@ -157,7 +157,7 @@ contract StakeEther {
     /// @return Returns an object containing details of a Stake
     function getDetailsOfASingleStake(
         uint256 _stakeId
-    ) external view sanityCheck returns (Stake memory) {
+    ) external view Check returns (Stake memory) {
         uint256 index = _stakeId - 1;
 
         Stake[] memory userStakes = stakes[msg.sender];
