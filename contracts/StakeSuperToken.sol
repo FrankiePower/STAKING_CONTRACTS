@@ -4,19 +4,10 @@ pragma solidity ^0.8.26;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract StakeSuperToken {
-    // This is a state variable to hold the MindToken Address
-    // so we can interact with it from the ERC20 Interface
 
     address public tokenAddress;
 
-    // This is a Mapping of every user on the platform,
-    // it's the the sum total of all the (MND), they have (actively) staked on the platform
-
     mapping(address => uint256) balances;
-
-    // this struct is a structure of each stake
-    // every stake takes in, amount staked, the time staked, the stake id,
-    // and if the stake have been liquidated or not
 
     struct Stake {
         uint256 amount;
@@ -28,21 +19,11 @@ contract StakeSuperToken {
         uint256 reward;
     }
 
-    // this is a mapping of a user's address to all the stakes they have on the platform
-    // since users can have multiple stakes, their Unique Addresses, are mapped to their stakes
-
     mapping(address => Stake[]) stakes;
 
-    // the constructor function triggers during deployment
-    // so when deploying we are setting the token address,
-    // which in this case is: 0x402d8DF98381c8dCd918B70532d78A8aDcC973Fa
-
-    constructor() {
+   constructor() {
         tokenAddress = 0xA02e9FeC84C5a1dA7AB98817E14191A714f9287D;
     }
-
-    // this is a sanity check modifier that ensures that zero address is not being used to interact with our contract
-    // we could have done the check in every of the contract, but it cost lesser gas this way, and a cleaner code
 
     modifier ZeroCheck() {
         require(msg.sender != address(0), "Address zero Detected");
@@ -57,9 +38,6 @@ contract StakeSuperToken {
         uint256 indexed amountWithdrawn
     );
 
-    /// @notice This function allows a user to stake a specified amount of MND tokens for a specific duration
-    /// @param _amount The amount of tokens to stake
-    /// @param _duration The duration for which the user wants to stake their tokens in days (30, 60, 90)
 
     function stake(uint256 _amount, uint256 _duration) external ZeroCheck {
         require(
@@ -67,17 +45,11 @@ contract StakeSuperToken {
             "Invalid staking duration"
         );
 
-        // we get the user's MND Balance
-
-        uint256 _userMindTokenBalance = IERC20(tokenAddress).balanceOf(
+        uint256 _userSuperTokenBalance = IERC20(tokenAddress).balanceOf(
             msg.sender
         );
 
-        //  Check Allowance
-
-        // here we check if the user actually has enough MND to stake
-
-        require(_userMindTokenBalance >= _amount, "Insufficient Funds");
+       require(_userSuperTokenBalance >= _amount, "Insufficient Funds");
 
         // here we transfer the intended stake amount to the contract address
         // just so the contract can manage it and stake it for the user
