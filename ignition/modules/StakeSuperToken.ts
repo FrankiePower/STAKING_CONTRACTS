@@ -1,9 +1,9 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-const StakeMindTokenModule = buildModule("StakeMindTokenModule", (m) => {
-  const StakeMindToken = m.contract("StakeMindToken");
+const StakeSuperTokenModule = buildModule("StakeSuperTokenModule", (m) => {
+  const StakeSuperToken = m.contract("StakeSuperToken");
 
-  return { StakeMindToken };
+  return { StakeSuperToken };
 });
 
-export default StakeMindTokenModule;
+export default StakeSuperTokenModule;

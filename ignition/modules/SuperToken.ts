@@ -1,9 +1,9 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-const MindTokenModule = buildModule("MindTokenModule", (m) => {
-  const MindToken = m.contract("MindToken");
+const SuperTokenModule = buildModule("SuperTokenModule", (m) => {
+  const SuperToken = m.contract("SuperToken");
 
-  return { MindToken };
+  return { SuperToken };
 });
 
-export default MindTokenModule;
+export default SuperTokenModule;
