@@ -3,14 +3,9 @@ pragma solidity ^0.8.26;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-/// @title This contract Allows a user to stake a certain amount of the (MND) token and get rewards;
-/// @author Collins Adi
-/// @notice a users can have multiple stakes, each stake is independent of the other and can be liquidated independently;
-/// @dev for a developer the contract is quite straignt farward;
-
 contract StakeSuperToken {
     // This is a state variable to hold the MindToken Address
-    // so we cam interact with it from the ERC20 Interface
+    // so we can interact with it from the ERC20 Interface
 
     address public tokenAddress;
 
@@ -49,7 +44,7 @@ contract StakeSuperToken {
     // this is a sanity check modifier that ensures that zero address is not being used to interact with our contract
     // we could have done the check in every of the contract, but it cost lesser gas this way, and a cleaner code
 
-    modifier Check() {
+    modifier ZeroCheck() {
         require(msg.sender != address(0), "Address zero Detected");
         _;
     }
@@ -66,7 +61,7 @@ contract StakeSuperToken {
     /// @param _amount The amount of tokens to stake
     /// @param _duration The duration for which the user wants to stake their tokens in days (30, 60, 90)
 
-    function stake(uint256 _amount, uint256 _duration) external Check {
+    function stake(uint256 _amount, uint256 _duration) external ZeroCheck {
         require(
             _duration == 30 || _duration == 60 || _duration == 90,
             "Invalid staking duration"
@@ -92,15 +87,6 @@ contract StakeSuperToken {
             address(this)
         );
         require(allowance >= _amount, "Insufficient Allowance");
-
-        /*************************************
-         *  BEFORE THIS FUNCTION WILL WORK   *
-         * THE FRONTEND MUST HAVE INITIATED  *
-         *    AN ERC20 'APPROVE' FUNCTION    *
-         * THAT THE USER MUST HAVE ACCEPTED, *
-         * ELSE WE WILL HAVE AN ERROR SAYING *
-         *      'INSUFFICENT ALLOWANCE'      *
-         *************************************/
 
         bool transferSuccess = IERC20(tokenAddress).transferFrom(
             msg.sender,
@@ -147,7 +133,7 @@ contract StakeSuperToken {
     // users will reeive all the (MND) tokens that they have staked
     // including a profit for how long the stake have been
 
-    function liquidate(uint256 _stakeId) external Check {
+    function liquidate(uint256 _stakeId) external ZeroCheck {
         // we are expecting the _stakeId argument passed to be an integer
         // and it it going to be the index of the stake - 1
         // because when asigning the Id we did userStakes.length + 1
@@ -172,11 +158,6 @@ contract StakeSuperToken {
         // this is just so the user does not get credited twice
 
         require(!stakeToWithdraw.liquidated, "Stake already Liquidated");
-
-        /********************************************************************************************************
-         * HERE WE ARE DOING THE NECESSARY DEDUCTION BEFORE WE ACTUALLY SEND THE TOKENS AND PROFIT TO THE USER  *
-         * THAT'S BECAUSE WE ARE PROTECTING AGAINST REENTRANCY, SO EVEN IF THEY REENTER, THEY HAVE BEEN DEBITED *
-         ********************************************************************************************************/
 
         balances[msg.sender] -= stakeToWithdraw.amount;
 
@@ -216,7 +197,7 @@ contract StakeSuperToken {
     function getTotalStakeBalance()
         external
         view
-        Check
+        ZeroCheck
         returns (uint256)
     {
         return balances[msg.sender];
@@ -241,7 +222,7 @@ contract StakeSuperToken {
 
     function getDetailsOfASingleStake(
         uint256 _stakeId
-    ) external view Check returns (Stake memory) {
+    ) external view ZeroCheck returns (Stake memory) {
         uint256 index = _stakeId - 1;
 
         Stake[] memory userStakes = stakes[msg.sender];
