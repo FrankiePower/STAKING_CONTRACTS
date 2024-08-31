@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-/// @title This contract allows a user to stake Ether and receive rewards
-/// @author Collins Adi
-/// @notice A user can have multiple stakes, each stake is independent of the other and can be liquidated independently
-/// @dev For a developer, the contract is quite straightforward
-
 contract StakeEther {
     // This is a Mapping of every user on the platform,
     // it's the the sum total of all the Ether they have (actively) staked on the platform
@@ -36,7 +31,7 @@ contract StakeEther {
 
     // This modifier checks that the caller is not the zero address
 
-    modifier Check() {
+    modifier ZeroCheck() {
         require(msg.sender != address(0), "Address zero detected");
         _;
     }
@@ -52,7 +47,7 @@ contract StakeEther {
     /// @notice This function allows a user to stake Ether for a specific duration
     /// @param _duration The duration for which the user wants to stake their Ether in days (30, 60, 90)
 
-    function stake(uint256 _duration) external payable Check {
+    function stake(uint256 _duration) external payable ZeroCheck {
         require(
             _duration == 30 || _duration == 60 || _duration == 90,
             "Invalid staking duration"
@@ -88,7 +83,7 @@ contract StakeEther {
     // This function allows a user to liquidate (withdraw) their stakes
     // Users will receive all the Ether they have staked, including a profit for how long the stake has been
 
-    function liquidate(uint256 _stakeId) external Check {
+    function liquidate(uint256 _stakeId) external ZeroCheck {
         uint256 index = _stakeId - 1;
 
         // Get the user's stakes from storage and ensure the index is valid
@@ -133,7 +128,7 @@ contract StakeEther {
     function getTotalStakeBalance()
         external
         view
-        Check
+        ZeroCheck
         returns (uint256)
     {
         return balances[msg.sender];
@@ -146,7 +141,7 @@ contract StakeEther {
     function getStakesForUser()
         external
         view
-        Check
+        ZeroCheck
         returns (Stake[] memory)
     {
         return stakes[msg.sender];
@@ -157,7 +152,7 @@ contract StakeEther {
     /// @return Returns an object containing details of a Stake
     function getDetailsOfASingleStake(
         uint256 _stakeId
-    ) external view Check returns (Stake memory) {
+    ) external view ZeroCheck returns (Stake memory) {
         uint256 index = _stakeId - 1;
 
         Stake[] memory userStakes = stakes[msg.sender];
