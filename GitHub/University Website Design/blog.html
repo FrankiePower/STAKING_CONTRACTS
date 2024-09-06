@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Website Design</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <section class="sub-header">
+      <nav>
+        <a href="index.html"><img src="eduford_img/logo.png" alt="logo" /></a>
+        <div class="nav-links" id="navLinks">
+          <i class="bx bxs-x-circle" onclick="hideMenu()"></i>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <i class="bx bx-menu" onclick="showMenu()"></i>
+      </nav>
+      <h1>Our Certificate & Online Programs For 2025</h1>
+    </section>
+
+    <!----------Blog-------------->
+    <section class="blog-content">
+      <div class="row">
+        <div class="blog-left">
+          <img src="eduford_img/certificate.jpg" alt="Certificate" />
+          <h2>Our Certificate & Online Programs For 2025</h2>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
+            excepturi aut vel sequi ipsum, dignissimos ipsam quas similique
+            aliquid assumenda exercitationem voluptates, fugiat nam. Error
+            repudiandae eum natus earum quasi! Lorem ipsum dolor sit, amet
+            consectetur adipisicing elit. Iure dolorem sint dicta, ea expedita
+            quasi accusantium facilis inventore. Sed laborum repudiandae
+            architecto, dolore incidunt placeat in atque? Molestiae, minima
+            voluptate.
+          </p>
+          <br />
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. A
+            excepturi, saepe, totam maiores doloremque incidunt, officiis
+            eligendi odit consequatur odio harum consectetur ea dolores aliquid
+            autem nulla quisquam explicabo veniam! Vel ea repellat, accusantium
+            ratione asperiores atque iure corrupti sit saepe ex officia dolores
+            earum autem enim illum! Est minus optio sed possimus ut quod
+            delectus, dolor autem voluptate illum. Lorem ipsum dolor sit amet
+            consectetur adipisicing elit. Reprehenderit nemo veniam consequatur
+            nostrum consequuntur libero nobis labore illo, provident ullam quos
+            quis distinctio eum adipisci ut quasi corporis molestiae hic.
+          </p>
+
+          <div class="comment-box">
+            <h3>Leave a comment</h3>
+            <form action="" class="comment-form">
+              <input type="text" placeholder="Enter Name" />
+              <input type="email" placeholder="Enter Email" />
+              <textarea
+                name="comment"
+                rows="5"
+                placeholder="Your Comment"
+                id=""
+              ></textarea>
+              <button type="submit" class="hero-btn red-btn">
+                Post Comment
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="blog-right">
+          <h3>Post Categories</h3>
+          <div>
+            <span>Business Analytics</span>
+            <span>21</span>
+          </div>
+          <div>
+            <span>Data Science</span>
+            <span>28</span>
+          </div>
+          <div>
+            <span>Machine Learning</span>
+            <span>15</span>
+          </div>
+          <div>
+            <span>Computer Science</span>
+            <span>21</span>
+          </div>
+          <div>
+            <span>Forex Trading</span>
+            <span>64</span>
+          </div>
+          <div>
+            <span>Blockchain</span>
+            <span>82</span>
+          </div>
+          <div>
+            <span>Accounting</span>
+            <span>11</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!----------Footer-------------->
+    <section class="footer">
+      <h4>About Us</h4>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eaque
+        mollitia quasi esse architecto inventore <br />
+        suscipit dignissimos ab ex consectetur similique veniam voluptates et
+        nisi reiciendis, doloribus maiores culpa odio!
+      </p>
+      <div class="icons">
+        <i class="bx bxl-facebook"></i>
+        <i class="bx bxl-twitter"></i>
+        <i class="bx bxl-instagram"></i>
+        <i class="bx bxl-linkedin"></i>
+      </div>
+      <p>Made with <i class="bx bx-heart"></i> by Frankie Tutorials</p>
+    </section>
+
+    <!----------JavaScript for Toggle Menu-------------->
+
+    <script>
+      let navLinks = document.getElementById("navLinks");
+      function showMenu() {
+        navLinks.style.right = "0";
+      }
+      function hideMenu() {
+        navLinks.style.right = "-200px";
+      }
+    </script>
+  </body>
+</html>
