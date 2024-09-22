@@ -13,11 +13,8 @@ error InsufficientContractBalance();
 error AlreadyHaveAnActiveStake();
 error LIQUIDATIONTIMENOTREACHEDYET();
 
-/**
- * @title StakeLayi
- * @dev A smart contract for staking ERC20 tokens with reward calculation.
- */
-contract StakeLayi {
+
+contract StakeToken {
     // Address of the ERC20 token being staked
     address private tokenAddress;
 
